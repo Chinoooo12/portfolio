@@ -24,7 +24,15 @@ This document outlines the structure, design, and features of a personal portfol
     *   Diseño
     *   Fotografia
 
-### 3. General Structure
+### 3. Image Search Page
+
+*   **Dedicated Page:** A new page, `image_search.html`, has been created for searching images.
+*   **Search Form:** The page contains a form with fields for "Publication Date" and "Category".
+*   **JavaScript Logic:** The `image_search.js` file handles the form submission. On clicking the "Search" button, it logs the search criteria to the console.
+*   **Firebase Simulation:** It also simulates the data that would be sent to a Firebase backend, logging a JSON object to the console. This object includes the search query and a timestamp.
+*   **Styling:** The page is styled with `image_search.css` for a clean and user-friendly interface.
+
+### 4. General Structure
 
 *   **Single-Page Application:** The portfolio is a single HTML file (`index.html`) with clear sections for Hero, Work, Skills, and Contact.
 *   **Modular JavaScript:** The interactivity is handled by `main.js`, which is linked at the end of the body.

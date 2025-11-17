@@ -9,29 +9,27 @@ let resultado = document.querySelector("#resultado");
 let id = document.querySelector("#id");
 
 
-let modalNombre = document.getElementById("modalNombre");
-let modalApellido = document.getElementById("modalApellido");
-let modalEmail = document.getElementById("modalEmail");
-let modalTelefono = document.getElementById("modalTelefono");
-let modalCiudad = document.getElementById("modalCiudad");
-let enviar = document.getElementById("enviar");
+let modalNombre = document.querySelector("#modalNombre");
+let modalApellido = document.querySelector("#modalApellido");
+let modalEmail = document.querySelector("#modalEmail");
+let modalTelefono = document.querySelector("#modalTelefono");
+let modalCiudad = document.querySelector("#modalCiudad");
+let enviar = document.querySelector("#enviar");
 
-export function getDatos() {
-    return {
-        btn,
-        btn2,
-        nombre,
-        apellido,
-        fecha,
-        id,
-        buscar,
-        buscar2,
-        resultado,
-        modalNombre,
-        modalApellido,
-        modalEmail,
-        modalTelefono,
-        modalCiudad,
-        enviar
-    };
+export let datos = {
+    btn,
+    btn2,
+    nombre,
+    apellido,
+    fecha,
+    id,
+    buscar,
+    buscar2,
+    resultado,
+    modalNombre,
+    modalApellido,
+    modalEmail,
+    modalTelefono,
+    modalCiudad,
+    enviar
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Search</title>
+    <link rel="stylesheet" href="image_search.css">
+</head>
+<body>
+    <h1>Search Images</h1>
+    <form id="search-form">
+        <div>
+            <label for="publication-date">Publication Date:</label>
+            <input type="date" id="publication-date" name="publication-date">
+        </div>
+        <div>
+            <label for="category">Category:</label>
+            <input type="text" id="category" name="category" placeholder="e.g., Nature, Technology">
+        </div>
+        <button type="button" id="search-button">Search</button>tton>
+    </form>
+
+    <div id="results"></div>
+
+    <script src="image_search.js"></script>
+</body>
+</html>

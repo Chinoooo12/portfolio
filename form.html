@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Category Form</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="fotografia.html">Photography</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section id="form-section">
+            <h2>Categorize Images</h2>
+            <form id="category-form">
+                <div class="form-group">
+                    <label for="image-select">Select Image:</label>
+                    <select id="image-select" name="image-select">
+                        <option value="img/img1.jpg">Image 1</option>
+                        <option value="img/img2.jpg">Image 2</option>
+                        <option value="img/img3.jpg">Image 3</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="category-select">Select Category:</label>
+                    <select id="category-select" name="category-select">
+                        <option value="one piece">One Piece</option>
+                        <option value="personal">Personal</option>
+                    </select>
+                </div>
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2024</p>
+    </footer>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.7/firebase-database-compat.js"></script>
+    <script src="form.js"></script>
+</body>
+</html>
