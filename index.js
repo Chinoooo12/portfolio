@@ -1,3 +1,4 @@
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-analytics.js";
 import {
@@ -12,9 +13,7 @@ import {
         getDocs
       } from "https://www.gstatic.com/firebasejs/12.4.0/firebase-firestore.js";
 
-//import { datos, getDatos } from "./elementos.js";
-
-import { getDatos } from "./elementos.js";
+import { datos } from "./elementos.js";
 
    const firebaseConfig = {
     apiKey: "AIzaSyDThadktQu2xXPpeKEzVVnD4Rk17fyPCwg",
@@ -30,64 +29,72 @@ import { getDatos } from "./elementos.js";
   const analytics = getAnalytics(app);
   const db = getFirestore(app);
 
-// esperar al DOM para leer elementos y enganchar handlers
-document.addEventListener('DOMContentLoaded', () => {
-    const datos = getDatos();
-
-    // ejemplo: guardar contacto — usar setDoc con ID derivado del email
-    if (datos.enviar) {
-        datos.enviar.addEventListener("click", async function (event) {
-            event.preventDefault();
-            if (!datos.modalNombre || !datos.modalEmail) return;
-
-            datos.enviar.classList.add('flash-success');
-            try {
-                // crear un id seguro a partir del email (sanitizar)
-                const rawEmail = (datos.modalEmail.value || '').toLowerCase().trim();
-                if (!rawEmail) throw new Error("Falta el email para generar el ID");
-                const userId = encodeURIComponent(rawEmail); // p.ej. "user%40example.com"
-
-                // usar setDoc para crear/actualizar el documento con ID personalizado
-                await setDoc(doc(db, "contactos", userId), {
-                    nombre: datos.modalNombre.value || '',
-                    apellido: datos.modalApellido?.value || '',
-                    email: rawEmail,
-                    telefono: datos.modalTelefono?.value || '',
-                    ciudad: datos.modalCiudad?.value || '',
-                    updatedAt: new Date().toISOString()
-                });
-
-                console.log("Contacto guardado con id:", userId);
-                setTimeout(() => {
-                    const modal = document.getElementById('contactModal');
-                    if (modal) modal.style.display = 'none';
-                    datos.enviar.classList.remove('flash-success');
-                }, 1200);
-            } catch (e) {
-                console.error("Error writing document: ", e);
+if (datos.enviar) {
+    datos.enviar.addEventListener("click", async function (event) {
+        event.preventDefault();
+        datos.enviar.classList.add('flash-success');
+        try {
+            const docRef = await addDoc(collection(db, "contactos"), {
+                nombre: datos.modalNombre.value,
+                apellido: datos.modalApellido.value,
+                email: datos.modalEmail.value,
+                telefono: datos.modalTelefono.value,
+                ciudad: datos.modalCiudad.value
+            });
+            console.log("Document written with ID: ", docRef.id);
+            setTimeout(() => {
+                document.getElementById('contactModal').style.display = 'none';
                 datos.enviar.classList.remove('flash-success');
-            }
-        });
-    }
+            }, 1200);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+            datos.enviar.classList.remove('flash-success');
+        }
+    });
+}
 
-    // ejemplo: crear usuario usando email como id (sanitizado)
-    if (datos.btn) {
-        datos.btn.addEventListener("click", async function () {
-            if (!datos.nombre || !datos.apellido) return;
-            try {
-                const email = (datos.nombre.value || '').toLowerCase(); // reemplaza por campo email si lo tienes
-                const userId = encodeURIComponent(email || `user-${Date.now()}`);
-                await setDoc(doc(db, "users", userId), {
-                    first: datos.nombre.value,
-                    last: datos.apellido.value,
-                    born: datos.fecha.value
-                });
-                console.log("Usuario guardado con id:", userId);
-            } catch (e) {
-                console.error("Error adding document: ", e);
-            }
-        });
-    }
+if (datos.btn) {
+    datos.btn.addEventListener("click", async function () {
+        // call guardarDatos if it's defined
+        if (typeof guardarDatos === "function") guardarDatos();
+        try {
+            const docRef = await addDoc(collection(db, "users"), {
+                first: datos.nombre.value,
+                last: datos.apellido.value,
+                born: datos.fecha.value
+            });
 
-    // resto de handlers...
-});
+            console.log("Document written with ID: ", docRef.id);
+        } catch (e) {
+            console.error("Error adding document: ", e);
+        }
+    });
+}
+
+if (datos.btn2) {
+    datos.btn2.addEventListener("click", async function() {
+        await setDoc(doc(db, "cities", datos.id.value), {
+            first: datos.nombre.value,
+            last: datos.apellido.value,
+            born: Number(datos.fecha.value)
+        });
+    });
+}
+
+if (datos.buscar2) {
+    datos.buscar2.addEventListener("click", async function() {
+        const q = query(collection(db, "cities"), where("born", "==", 2005));
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            datos.resultado.innerHTML +=   `
+                                        <div class="resp">
+                                          <div>ID: ${doc.id} </div>
+                                          <div>Nombre: ${doc.data().first}</div>
+                                          <div>Apellido: ${doc.data().last}</div>
+                                          <div>Fecha de Nacimiento: ${doc.data().born}</div>
+                                        </div>
+                                          `;
+            console.log(doc.id, " => ", doc.data());
+        });
+    });
+}
